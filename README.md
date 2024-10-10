@@ -2,7 +2,7 @@
 
 ## Description
 
-vdlgr uses optical character recognigition (OCR) and optical character detection (OCD) to enable data-logging from video files.
+vdlgr uses optical character recognition (OCR) and optical character detection (OCD) to enable data-logging from video files.
 
 Data-loggers are devices used in various engineering, scientific, commercial / industrial contexts. These devices can be expensive, and may not facilitate all the desired input types, for example if you wished to data-log mass/weight, temperature and voltage, such a device may not exist. However, plausibly you could have a digital thermometer, a digital scales, and a mulitmeter.
 
