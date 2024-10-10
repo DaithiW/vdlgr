@@ -20,11 +20,11 @@ At this time a Windows installer (msi) is provided. No signing is provided, so u
 
 ## What it does
 
-vdlgr assume that the user has recorded a video where a data source is at a fixed location in the frame, and that it is visible from the first frame of the video.
-The first frame is extracted from the video file (using OpenCV), and then passed to PaddleOCR to run detection and recognition on the frame.
-An image is created of the first frame with numbered boxes corresponding to where text has been detected.
-The user selects which boxes should be logged, the time interval for logging, and the output file (csv format).
-vdlgr will through the entire video file at the time interval, extract the frames, pass them to PaddleOCR and write the results to the output file.
+- vdlgr assume that the user has recorded a video where a data source is at a fixed location in the frame, and that it is visible from the first frame of the video.
+- The first frame is extracted from the video file (using OpenCV), and then passed to PaddleOCR to run detection and recognition on the frame.
+- An image is created of the first frame with numbered boxes corresponding to where text has been detected.
+- The user selects which boxes should be logged, the time interval for logging, and the output file (csv format).
+- vdlgr will through the entire video file at the time interval, extract the frames, pass them to PaddleOCR and write the results to the output file.
 
 ## License
 
@@ -32,5 +32,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-Email: daitiw@proton.me
+Email: daithiw@proton.me
 
