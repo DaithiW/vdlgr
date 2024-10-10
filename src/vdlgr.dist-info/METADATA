@@ -1,0 +1,11 @@
+Metadata-Version: 2.1
+Briefcase-Version: 0.3.19
+Name: vdlgr
+Formal-Name: vdlgr
+App-ID: com.example.vdlgr
+Version: 0.0.1
+Home-page: https://example.com/vdlgr
+Download-URL: https://example.com/vdlgr
+Author: David Walsh
+Author-email: daithiw@proton.me
+Summary: Data-logger for video files, using OCR.
