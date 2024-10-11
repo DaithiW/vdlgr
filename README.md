@@ -16,7 +16,7 @@ It is ideal of anyone looking to capture data from devices they already own, or 
 
 ## Installation
 
-At this time a Windows installer (msi) is provided. No signing is provided, so users will need to dismiss security warnings to install.
+At this time a Windows installer (msi) is provided (see [RELEASES](https://github.com/DaithiW/vdlgr/releases). No signing is provided, so users will need to dismiss security warnings to install.
 
 ## What it does
 
@@ -28,7 +28,7 @@ At this time a Windows installer (msi) is provided. No signing is provided, so u
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/DaithiW/vdlgr/blob/main/LICENSE) file for details.
 
 ## Contact
 
