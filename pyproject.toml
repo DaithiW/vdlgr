@@ -2,7 +2,7 @@
 [tool.briefcase]
 project_name = "vdlgr"
 bundle = "com.example"
-version = "0.0.1"
+version = "0.0.2"
 url = "https://github.com/DaithiW/vdlgr"
 license.file = "LICENSE"
 author = "David Walsh"
@@ -27,6 +27,7 @@ requires = [
   "paddleocr",
   "pillow",
   "setuptools",
+  "albumentations",
 ]
 test_requires = [
     "pytest",

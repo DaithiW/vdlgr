@@ -10,12 +10,12 @@ from toga.style.pack import COLUMN, ROW
 
 from vdlgr.ocr_utils import ocr_generator, visualize_ocr_result
 from vdlgr.video_utils import (calculate_frame_interval, frame_generator,
-                                   get_video_info, subframe_generator)
+                               get_video_info, subframe_generator)
 
 
 class VideoOCRApp(toga.App):
     def startup(self):
-        self.main_window = toga.MainWindow(title="vdlgr")
+        self.main_window = toga.MainWindow(title="vdlgr", size=(1000,500))
 
         # Initialize variables
         self.video_path = None
@@ -49,15 +49,15 @@ class VideoOCRApp(toga.App):
         # Interval input
         self.interval_label = toga.Label("Interval (s):", style=Pack(padding=5))
         self.interval_slider = toga.Slider(
-            range=(0.5, 10),
+            range=(0.1, 10),
             value=5,
-            tick_count=20,
+            tick_count=100,
             on_change=self.slider_callback,
             style=Pack(width=300),
         )
         # self.interval_slider.style.flex = 1
         self.interval_value = toga.Label(
-            f"{self.interval_slider.value}s", style=Pack(padding=5)
+            f"{self.interval_slider.value:.1f}s", style=Pack(padding=5)
         )
         interval_box = toga.Box(
             children=[self.interval_label, self.interval_slider, self.interval_value],
@@ -93,7 +93,7 @@ class VideoOCRApp(toga.App):
         )
 
         # Image display
-        self.image_view = toga.ImageView(style=Pack(padding=5, height=600))
+        self.image_view = toga.ImageView(style=Pack(padding=5,) )
         image_box = toga.Box(children=[self.image_view], style=Pack(direction=ROW))
 
         # Label for checkboxes
@@ -103,7 +103,7 @@ class VideoOCRApp(toga.App):
         )
 
         # Frame for checkboxes
-        self.checkboxes_box = toga.Box(style=Pack(direction=COLUMN, padding=5))
+        self.checkboxes_box = toga.Box(style=Pack(direction=COLUMN, padding=5, height=100, color="red"))
 
         # Start OCR button
         self.start_ocr_button = toga.Button(
@@ -121,22 +121,31 @@ class VideoOCRApp(toga.App):
         start_ocr_button_box = toga.Box(
             children=[self.start_ocr_button, self.progress], style=Pack(direction=ROW)
         )
+        
+        # main box split
 
-        # Main box
-        self.main_box = toga.Box(
+        split = toga.SplitContainer()
+
+        # left side content
+        left_box = toga.Box(
             children=[
                 video_file_box,
                 interval_box,
                 output_file_box,
                 process_button_box,
                 video_info_box,
-                image_box,
                 checkbox_label_box,
                 self.checkboxes_box,
                 start_ocr_button_box,
             ],
             style=Pack(direction=COLUMN, padding=10),
         )
+        # scroll containers will allow for lots of boxes and / or big images
+        left_container = toga.ScrollContainer(content=left_box)
+        right_container = toga.ScrollContainer(content=image_box)
+
+        split.content = [left_container, right_container]
+        self.main_box = split
         self.main_window.content = self.main_box
 
     async def select_video_file(self, widget):
@@ -150,7 +159,7 @@ class VideoOCRApp(toga.App):
                 self.video_path = video_file
                 self.video_file_label.text = str(self.video_path)
 
-                self.checkboxes_box.clear() # don't want boxes referring to a previous video
+                self.checkboxes_box.clear()  # don't want boxes referring to a previous video
                 self.image_view.image = None
                 print(f"Video path set to: {self.video_path}")  # Debug print
             else:
@@ -164,7 +173,7 @@ class VideoOCRApp(toga.App):
         try:
             output_file = await self.main_window.save_file_dialog(
                 title="Select Output File",
-                suggested_filename="output.txt",
+                suggested_filename="output.csv",
                 file_types=["csv"],
             )
             if output_file is not None:
@@ -179,7 +188,7 @@ class VideoOCRApp(toga.App):
             self.output_file_label.text = "File selection canceled"
 
     def slider_callback(self, widget):
-        self.interval_value.text = f"{self.interval_slider.value} s"
+        self.interval_value.text = f"{self.interval_slider.value:.1f} s"
 
     def process_video(self, widget):
         if not self.video_path:
@@ -247,7 +256,7 @@ class VideoOCRApp(toga.App):
 
     def display_boxes(self, boxes):
         # Clear previous checkboxes
-        #self.checkboxes_box.children.clear()
+        # self.checkboxes_box.children.clear()
 
         self.checkboxes_box.clear()
         self.boxes_vars = []
@@ -276,8 +285,13 @@ class VideoOCRApp(toga.App):
     async def process_and_save(self):
         # Process video and save output
         with open(self.output_file, "w") as f:
-            f.write("Box,Data,Frame,Time,"*len(self.selected_boxes))
+            f.write("Box,Data,Frame,Time," * len(self.selected_boxes))
             f.write(f"\n")
+            try:
+                self.interval = float(self.interval_slider.value)
+            except ValueError:
+                self.main_window.error_dialog("Error", "Please enter a valid interval.")
+                return
             for results, frame, meta in ocr_generator(
                 subframe_generator(
                     frame_generator(self.video_path, self.interval), self.selected_boxes

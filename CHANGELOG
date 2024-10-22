@@ -1,5 +1,13 @@
 # vdlgr Release Notes
 
+## 0.0.2 (XX Oct 2024)
+
+- bundled paddleocr models into "resources" folder, updated ocr to use these.
+- updated interval slider to 0.1s increments and set min to 0.1s (max still 10s).
+- interval slider value is now checked when OCR processing starts.
+- layout updated to accomodate larger resolution videos and longer lists of boxes. 
+- suggested output file now in .csv filetype, not .txt.
+
 ## 0.0.1 (10 Oct 2024)
 
 * Initial release
