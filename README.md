@@ -32,5 +32,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-Email: daitiw@proton.me
+Email: daithiw@proton.me
 
